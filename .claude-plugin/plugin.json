@@ -1,0 +1,35 @@
+{
+  "name": "simplified-social",
+  "version": "1.0.0",
+  "description": "Social media scheduling and publishing via Simplified.com — post to Facebook, Instagram, TikTok, YouTube, LinkedIn, Pinterest, Threads, Google Business, Bluesky, and Twitter from your AI coding tool.",
+  "author": {
+    "name": "Simplified (CeleryHQ Inc.)",
+    "url": "https://simplified.com"
+  },
+  "homepage": "https://github.com/AISimplifed/simplified-social-agent",
+  "repository": "https://github.com/AISimplifed/simplified-social-agent",
+  "license": "MIT",
+  "keywords": [
+    "social-media",
+    "scheduling",
+    "facebook",
+    "instagram",
+    "tiktok",
+    "youtube",
+    "linkedin",
+    "pinterest",
+    "threads",
+    "bluesky",
+    "twitter",
+    "google-business",
+    "automation",
+    "simplified"
+  ],
+  "skills": [
+    "skills/simplified-social/SKILL.md"
+  ],
+  "mcp": ".mcp.json",
+  "engines": {
+    "claude-code": ">=1.0.0"
+  }
+}

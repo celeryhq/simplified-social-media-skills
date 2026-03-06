@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "simplified-social-media": {
+      "type": "http",
+      "url": "https://mcp.simplified.com/social-media/mcp",
+      "headers": {
+        "Authorization": "Token ${SIMPLIFIED_API_TOKEN}",
+        "Organization": "${SIMPLIFIED_ORG_ID}"
+      }
+    }
+  }
+}
