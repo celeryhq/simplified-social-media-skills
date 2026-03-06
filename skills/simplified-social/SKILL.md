@@ -42,7 +42,7 @@ If the user tries to use any social media feature and the API key is missing or 
    >
    > Please follow these steps:
    > 1. Sign up or log in at [simplified.com](https://simplified.com)
-   > 2. Go to **Settings → API** and copy your API key
+   > 2. Go to **[Settings → API Keys](https://app.simplified.com/settings/api-keys)** and copy your API key
    > 3. Add to your shell config (`~/.zshrc` or `~/.bashrc`):
    >    ```bash
    >    export SIMPLIFIED_API_KEY="your-api-key"
@@ -56,7 +56,7 @@ If the user tries to use any social media feature and the API key is missing or 
 
 1. Sign up at [simplified.com](https://simplified.com)
 2. Connect your social media accounts in the Simplified dashboard
-3. Get your API key from **Settings → API**
+3. Get your API key from **[Settings → API Keys](https://app.simplified.com/settings/api-keys)**
 4. Set environment variable:
    ```bash
    export SIMPLIFIED_API_KEY="your-api-key"
