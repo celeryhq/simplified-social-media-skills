@@ -21,13 +21,13 @@ Facebook, Instagram, TikTok, YouTube, LinkedIn, Pinterest, Threads, Google Busin
 ### Claude Code
 
 ```bash
-claude --plugin-dir /path/to/simplified-social-agent
+claude --plugin-dir /path/to/simplified-social-media-skills
 ```
 
 Or via plugin marketplace:
 
 ```
-/plugin install https://github.com/AISimplifed/simplified-social-agent
+/plugin install https://github.com/celeryhq/simplified-social-media-skills
 ```
 
 ### OpenClaw / ClawHub
