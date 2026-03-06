@@ -14,8 +14,8 @@
     },
     "source": {
       "type": "git",
-      "url": "https://github.com/AISimplifed/simplified-social-agent"
+      "url": "https://github.com/celeryhq/simplified-social-media-skills"
     },
-    "installCommand": "/plugin install https://github.com/AISimplifed/simplified-social-agent"
+    "installCommand": "/plugin install https://github.com/celeryhq/simplified-social-media-skills"
   }
 }
