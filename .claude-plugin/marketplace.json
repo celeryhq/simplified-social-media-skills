@@ -16,6 +16,6 @@
       "type": "git",
       "url": "https://github.com/celeryhq/simplified-social-media-skills"
     },
-    "installCommand": "/plugin install https://github.com/celeryhq/simplified-social-media-skills"
+    "installCommand": "/plugin install simplified-social@celeryhq-simplified-social-media-skills"
   }
 }
