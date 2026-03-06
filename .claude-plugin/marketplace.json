@@ -1,21 +1,36 @@
 {
-  "listing": {
-    "name": "Simplified Social Media",
-    "slug": "simplified-social",
-    "tagline": "Schedule and publish social media posts from your AI coding tool",
-    "description": "Connect your Simplified.com social media accounts and manage posts across 10 platforms — Facebook, Instagram, TikTok, YouTube, LinkedIn, Pinterest, Threads, Google Business, Bluesky, and TikTok Business — directly from Claude Code, OpenClaw, Cursor, or Codex CLI.",
-    "category": "productivity",
-    "icon": "https://simplified.com/favicon.ico",
-    "screenshots": [],
-    "author": {
-      "name": "Simplified (CeleryHQ Inc.)",
-      "url": "https://simplified.com",
-      "verified": true
-    },
-    "source": {
-      "type": "git",
-      "url": "https://github.com/celeryhq/simplified-social-media-skills"
-    },
-    "installCommand": "/plugin install simplified-social@celeryhq-simplified-social-media-skills"
-  }
+  "name": "simplified-social-media",
+  "owner": {
+    "name": "Simplified"
+  },
+  "metadata": {
+    "description": "Schedule and publish social media posts from your AI coding tool",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "simplified-social",
+      "source": ".",
+      "description": "Post to Facebook, Instagram, TikTok, YouTube, LinkedIn, Pinterest, Threads, Google Business, and Bluesky directly from Claude Code.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Simplified"
+      },
+      "homepage": "https://simplified.com",
+      "license": "MIT",
+      "keywords": [
+        "social-media",
+        "scheduling",
+        "facebook",
+        "instagram",
+        "tiktok",
+        "youtube",
+        "linkedin",
+        "pinterest",
+        "threads",
+        "bluesky",
+        "google-business"
+      ]
+    }
+  ]
 }
