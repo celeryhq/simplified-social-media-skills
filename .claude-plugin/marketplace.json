@@ -3,7 +3,7 @@
     "name": "Simplified Social Media",
     "slug": "simplified-social",
     "tagline": "Schedule and publish social media posts from your AI coding tool",
-    "description": "Connect your Simplified.com social media accounts and manage posts across 11 platforms — Facebook, Instagram, TikTok, YouTube, LinkedIn, Pinterest, Threads, Google Business, Bluesky, Twitter, and TikTok Business — directly from Claude Code, OpenClaw, Cursor, or Codex CLI.",
+    "description": "Connect your Simplified.com social media accounts and manage posts across 10 platforms — Facebook, Instagram, TikTok, YouTube, LinkedIn, Pinterest, Threads, Google Business, Bluesky, and TikTok Business — directly from Claude Code, OpenClaw, Cursor, or Codex CLI.",
     "category": "productivity",
     "icon": "https://simplified.com/favicon.ico",
     "screenshots": [],

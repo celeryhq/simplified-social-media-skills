@@ -1,7 +1,7 @@
 {
   "name": "simplified-social",
   "version": "1.0.0",
-  "description": "Social media scheduling and publishing via Simplified.com — post to Facebook, Instagram, TikTok, YouTube, LinkedIn, Pinterest, Threads, Google Business, Bluesky, and Twitter from your AI coding tool.",
+  "description": "Social media scheduling and publishing via Simplified.com — post to Facebook, Instagram, TikTok, YouTube, LinkedIn, Pinterest, Threads, Google Business, and Bluesky from your AI coding tool.",
   "author": {
     "name": "Simplified (CeleryHQ Inc.)",
     "url": "https://simplified.com"
@@ -20,7 +20,6 @@
     "pinterest",
     "threads",
     "bluesky",
-    "twitter",
     "google-business",
     "automation",
     "simplified"
