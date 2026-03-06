@@ -29,13 +29,36 @@ metadata:
 
 Schedule, queue, and draft social media posts across 10 platforms using Simplified.com.
 
+## IMPORTANT: Before Any Operation
+
+**Always check if `SIMPLIFIED_API_KEY` is configured before attempting any tool calls.**
+
+If the user tries to use any social media feature and the API key is missing or returns a 401/Unauthorized error:
+
+1. **Stop immediately** — do not retry the failed call
+2. **Inform the user** with this exact message:
+
+   > **Simplified Social Media requires an API key to work.**
+   >
+   > Please follow these steps:
+   > 1. Sign up or log in at [simplified.com](https://simplified.com)
+   > 2. Go to **Settings → API** and copy your API key
+   > 3. Add to your shell config (`~/.zshrc` or `~/.bashrc`):
+   >    ```bash
+   >    export SIMPLIFIED_API_KEY="your-api-key"
+   >    ```
+   > 4. Reload your shell: `source ~/.zshrc`
+   > 5. Restart Claude Code to pick up the new variable
+
+3. **Do not proceed** with the original request until the user confirms the key is set
+
 ## Setup
 
 1. Sign up at [simplified.com](https://simplified.com)
 2. Connect your social media accounts in the Simplified dashboard
 3. Get your API key from **Settings → API**
 4. Set environment variable:
-   ```
+   ```bash
    export SIMPLIFIED_API_KEY="your-api-key"
    ```
 
