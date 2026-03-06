@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "simplified-social",
-      "source": ".",
+      "source": "./skills/simplified-social",
       "description": "Post to Facebook, Instagram, TikTok, YouTube, LinkedIn, Pinterest, Threads, Google Business, and Bluesky directly from Claude Code.",
       "version": "1.0.0",
       "author": {
