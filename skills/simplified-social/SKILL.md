@@ -1,7 +1,7 @@
 ---
 name: simplified-social
-description: Schedule and publish social media posts across 10 platforms via Simplified.com
-version: 1.0.0
+description: Schedule and publish social media posts and retrieve analytics across 10 platforms via Simplified.com
+version: 1.1.0
 homepage: https://simplified.com
 triggers:
   - social media
@@ -17,6 +17,16 @@ triggers:
   - threads
   - bluesky
   - social accounts
+  - analytics
+  - social media analytics
+  - post analytics
+  - audience analytics
+  - engagement analytics
+  - reach analytics
+  - impressions
+  - followers growth
+  - social insights
+  - social performance
 metadata:
   openclaw:
     emoji: "📱"
@@ -27,7 +37,7 @@ metadata:
 
 # Simplified Social Media
 
-Schedule, queue, and draft social media posts across 10 platforms using Simplified.com.
+Schedule, queue, and draft social media posts, and retrieve analytics across 10 platforms using Simplified.com.
 
 ## IMPORTANT: Before Any Operation
 
@@ -114,6 +124,62 @@ Call `createSocialMediaPost` with the composed payload.
 | `date`        | string   | No       | Schedule datetime: `YYYY-MM-DD HH:MM`   |
 | `media`       | string[] | No       | Public media URLs (max 10)               |
 | `additional`  | object   | No       | Platform-specific settings               |
+
+### `getSocialMediaAnalyticsRange`
+
+Retrieves time-series data for selected metrics within a date range.
+
+| Parameter    | Type     | Required | Description                                                  |
+|--------------|----------|----------|--------------------------------------------------------------|
+| `account_id` | integer  | Yes      | Social media account ID (from `getSocialMediaAccounts`)      |
+| `metrics`    | string[] | Yes      | List of metrics to retrieve (see `references/ANALYTICS_GUIDE.md`) |
+| `date_from`  | string   | Yes      | Start date: `YYYY-MM-DD`                                     |
+| `date_to`    | string   | Yes      | End date: `YYYY-MM-DD`                                       |
+| `tz`         | string   | No       | Timezone, e.g. `UTC`, `Europe/Warsaw` (default: `UTC`)       |
+
+Returns a structured object:
+- `data` — array of `{ date, metrics: AnalyticsMetric[] }` — per-day time-series
+- `baseLine` — `{ [metricId]: AnalyticsMetric }` — aggregated totals for the full period, each with `value` (current) and `prevValue` (equivalent previous period)
+- `additional` — `{ [metricId]: AnalyticsMetric[] }` — extra metrics computed over different windows (e.g., 28-day reach)
+
+Unknown metrics are silently ignored. See `references/ANALYTICS_GUIDE.md` for full metric list and response examples.
+
+### `getSocialMediaAnalyticsPosts`
+
+Retrieves analytics for individual posts within a date range.
+
+| Parameter    | Type    | Required | Description                                             |
+|--------------|---------|----------|---------------------------------------------------------|
+| `account_id` | integer | Yes      | Social media account ID                                 |
+| `date_from`  | string  | Yes      | Start date: `YYYY-MM-DD`                                |
+| `date_to`    | string  | Yes      | End date: `YYYY-MM-DD`                                  |
+
+Returns paginated post list with per-post metrics (likes, impressions, etc.). Fields include `all_posts_count`, `current_page`, `pages_count`, and `posts` array with `id`, `message`, `publishedDate`, `postUrl`, `postType`, `media`, and `metrics`.
+
+### `getSocialMediaAnalyticsAggregated`
+
+Retrieves aggregated analytics (totals and averages) for an account within a date range.
+
+| Parameter    | Type    | Required | Description                                             |
+|--------------|---------|----------|---------------------------------------------------------|
+| `account_id` | integer | Yes      | Social media account ID                                 |
+| `date_from`  | string  | Yes      | Start date: `YYYY-MM-DD`                                |
+| `date_to`    | string  | Yes      | End date: `YYYY-MM-DD`                                  |
+
+Returns `data` (daily metrics array) and `baseLine` with four aggregated KPIs: `impressions_aggregated`, `engagement_aggregated`, `followers_aggregated`, `publishing_aggregated`. Each KPI includes `value` (current period) and `prevValue` (previous period for comparison).
+
+### `getSocialMediaAnalyticsAudience`
+
+Retrieves audience demographics and follower data for an account.
+
+| Parameter    | Type    | Required | Description                                                  |
+|--------------|---------|----------|--------------------------------------------------------------|
+| `account_id` | integer | Yes      | Social media account ID                                      |
+| `date_from`  | string  | Yes      | Start date: `YYYY-MM-DD`                                     |
+| `date_to`    | string  | Yes      | End date: `YYYY-MM-DD`                                       |
+| `tz`         | string  | No       | Timezone, e.g. `UTC`, `Europe/Warsaw`                        |
+
+Returns audience breakdown: `audience_page_fans_gender_age` (age/gender split), `audience_page_fans_country` (followers by country code), `audience_page_fans_city` (followers by city). Not all fields are available for every network.
 
 ## Action Types
 
@@ -221,8 +287,52 @@ Key enum values:
    })
 ```
 
+### Analytics: Time-Series Metrics
+
+```
+1. getSocialMediaAccounts({ network: "instagram" })
+2. getSocialMediaAnalyticsRange({
+     account_id: 123,
+     metrics: ["impressions", "reach", "follower_count"],
+     date_from: "2026-02-01",
+     date_to: "2026-02-28",
+     tz: "Europe/Warsaw"
+   })
+```
+
+### Analytics: Post Performance Report
+
+```
+1. getSocialMediaAccounts()
+2. getSocialMediaAnalyticsPosts({
+     account_id: 456,
+     date_from: "2026-02-01",
+     date_to: "2026-02-28"
+   })
+```
+
+### Analytics: Account Overview (KPIs + Audience)
+
+```
+1. getSocialMediaAccounts({ network: "facebook" })
+2. getSocialMediaAnalyticsAggregated({
+     account_id: 789,
+     date_from: "2026-02-01",
+     date_to: "2026-02-28"
+   })
+3. getSocialMediaAnalyticsAudience({
+     account_id: 789,
+     date_from: "2026-02-01",
+     date_to: "2026-02-28"
+   })
+```
+
 ## Gotchas
 
+- **Analytics `account_id` is an integer**, not a string — use the numeric `id` from `getSocialMediaAccounts`
+- **Analytics date format** is `YYYY-MM-DD` (no time component, unlike post scheduling)
+- **Unknown metrics are silently ignored** by `getSocialMediaAnalyticsRange` — check `references/ANALYTICS_GUIDE.md` for per-network availability
+- **Audience data availability varies** — `getSocialMediaAnalyticsAudience` may return partial or empty data depending on the network
 - **Date format** must be `YYYY-MM-DD HH:MM` (24-hour, no seconds, no timezone — uses account timezone)
 - **Media URLs** must be publicly accessible — pre-signed or CDN URLs work, localhost does not
 - **`date` is required** when `action` is `schedule` — omit it for `add_to_queue` and `draft`
