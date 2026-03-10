@@ -1,7 +1,7 @@
 ---
 name: simplified-social
 description: Manage your entire social media from AI — post, schedule, and analyze across Facebook, Instagram, TikTok, YouTube, LinkedIn, Pinterest, Threads, Bluesky and Google Business
-version: 1.2.0
+version: 1.2.1
 homepage: https://simplified.com
 triggers:
   - social media
@@ -34,6 +34,7 @@ triggers:
   - post scheduling
   - social media automation
   - social media campaign
+license: MIT
 metadata:
   openclaw:
     emoji: "📱"

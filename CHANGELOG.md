@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.1] - 2026-03-10
+
+### Fixed
+- Add `license: MIT` to SKILL.md frontmatter for ClawHub publishing compatibility
+
 ## [1.2.0] - 2026-03-10
 
 ### Added
