@@ -1,6 +1,6 @@
 ---
 name: simplified-social
-description: Schedule and publish social media posts and retrieve analytics across 10 platforms via Simplified.com
+description: Manage your entire social media from AI — post, schedule, and analyze across Facebook, Instagram, TikTok, YouTube, LinkedIn, Pinterest, Threads, Bluesky and Google Business
 version: 1.2.0
 homepage: https://simplified.com
 triggers:
