@@ -1,7 +1,7 @@
 ---
 name: simplified-social
 description: Schedule and publish social media posts and retrieve analytics across 10 platforms via Simplified.com
-version: 1.1.0
+version: 1.2.0
 homepage: https://simplified.com
 triggers:
   - social media
@@ -16,6 +16,8 @@ triggers:
   - pinterest
   - threads
   - bluesky
+  - google my business
+  - gmb
   - social accounts
   - analytics
   - social media analytics
@@ -27,6 +29,11 @@ triggers:
   - followers growth
   - social insights
   - social performance
+  - content calendar
+  - social media manager
+  - post scheduling
+  - social media automation
+  - social media campaign
 metadata:
   openclaw:
     emoji: "📱"
@@ -84,7 +91,19 @@ Call `getSocialMediaAccounts` to list connected accounts. Optionally filter by n
 getSocialMediaAccounts({ network: "instagram" })
 ```
 
-Returns account objects with `id`, `name`, `network`, and connection status.
+Returns `{ accounts: [...] }` where each account has `id` (integer) and `name` and `type` (see type values below).
+
+If `getSocialMediaAccounts` returns an empty list, stop and inform the user with this message:
+
+> **No social media accounts connected yet.**
+>
+> You're one step away from managing your entire social media presence without leaving your editor. Connect your accounts in the [Simplified dashboard](https://app.simplified.com) and you'll be able to:
+>
+> - 📅 Schedule and publish posts to Facebook, Instagram, TikTok, YouTube, LinkedIn, Pinterest, Threads, Bluesky and Google Business — with a single command
+> - 📊 Pull analytics, track reach, engagement and follower growth across all platforms
+> - 🤖 Let your AI agent run full social media campaigns autonomously
+>
+> Takes 2 minutes to connect. No code required.
 
 ### Step 2: Select Target Accounts
 
@@ -104,6 +123,16 @@ Build the post payload:
 
 Call `createSocialMediaPost` with the composed payload.
 
+## Choosing the Right Analytics Tool
+
+| User asks about... | Tool to call |
+|---|---|
+| Trends over time, charts, metric growth/decline | `getSocialMediaAnalyticsRange` |
+| Specific posts, best/worst performing content | `getSocialMediaAnalyticsPosts` |
+| Account overview, KPIs, period summary | `getSocialMediaAnalyticsAggregated` |
+| Demographics, follower origins, age/gender breakdown | `getSocialMediaAnalyticsAudience` |
+| "Show me analytics" with no further context | Call `getSocialMediaAnalyticsAggregated` + `getSocialMediaAnalyticsRange` with key metrics — this gives the best general overview |
+
 ## Tool Reference
 
 ### `getSocialMediaAccounts`
@@ -112,7 +141,31 @@ Call `createSocialMediaPost` with the composed payload.
 |-----------|--------|----------|--------------------------------------|
 | `network` | string | No       | Filter by platform (see networks)    |
 
-**Networks:** `facebook`, `instagram`, `linkedin`, `tiktok`, `youtube`, `pinterest`, `threads`, `google`, `bluesky`, `tiktokBusiness`
+**Networks (filter parameter):** `facebook`, `instagram`, `linkedin`, `tiktok`, `youtube`, `pinterest`, `threads`, `google`, `bluesky`, `tiktokBusiness`
+
+Returns `{ accounts: [...] }`. Each account object:
+
+| Field  | Type    | Description |
+|--------|---------|-------------|
+| `id`   | integer | Account ID — use for all analytics calls; convert to string for `account_ids` in `createSocialMediaPost` |
+| `name` | string  | Account display name |
+| `type` | string  | Account type — see values below |
+
+**`type` values and their meaning:**
+
+| `type` value | Platform | Notes |
+|---|---|---|
+| `Facebook page` | Facebook | — |
+| `Instagram business` / `Instagram profile` | Instagram | — |
+| `Youtube account` | YouTube | — |
+| `TikTok profile` | TikTok Personal | use `tiktok` metrics set |
+| `TikTok profile (business)` | TikTok Business | use `tiktokBusiness` metrics set |
+| `LinkedIn company` | LinkedIn | use LinkedIn Company metrics set |
+| `LinkedIn profile` | LinkedIn | use LinkedIn Personal metrics set |
+| `Pinterest board` | Pinterest | — |
+| `Threads account` | Threads | — |
+| `Bluesky account` | Bluesky | — |
+| `Google Profile` | Google Business | — |
 
 ### `createSocialMediaPost`
 
@@ -142,7 +195,7 @@ Returns a structured object:
 - `baseLine` — `{ [metricId]: AnalyticsMetric }` — aggregated totals for the full period, each with `value` (current) and `prevValue` (equivalent previous period)
 - `additional` — `{ [metricId]: AnalyticsMetric[] }` — extra metrics computed over different windows (e.g., 28-day reach)
 
-Unknown metrics are silently ignored. See `references/ANALYTICS_GUIDE.md` for full metric list and response examples.
+Unknown metrics are silently ignored. See `references/ANALYTICS_GUIDE.md` for the full metric list, default metrics per network, and response examples.
 
 ### `getSocialMediaAnalyticsPosts`
 
@@ -153,8 +206,12 @@ Retrieves analytics for individual posts within a date range.
 | `account_id` | integer | Yes      | Social media account ID                                 |
 | `date_from`  | string  | Yes      | Start date: `YYYY-MM-DD`                                |
 | `date_to`    | string  | Yes      | End date: `YYYY-MM-DD`                                  |
+| `page`       | integer | No       | Page number (default: 1, minimum: 1)                    |
+| `per_page`   | integer | No       | Posts per page (default: 10, max: 100)                  |
 
 Returns paginated post list with per-post metrics (likes, impressions, etc.). Fields include `all_posts_count`, `current_page`, `pages_count`, and `posts` array with `id`, `message`, `publishedDate`, `postUrl`, `postType`, `media`, and `metrics`.
+
+**Pagination:** To fetch all posts, use `per_page: 100` to minimize API calls, start with `page: 1` and keep incrementing until `current_page >= pages_count`. Stop when there are no more pages or `posts` is empty.
 
 ### `getSocialMediaAnalyticsAggregated`
 
@@ -201,7 +258,7 @@ All platform settings go inside the `additional` object, grouped by platform nam
 | Instagram      | **`postType`**, **`channel`**     | `postReel` (reel only)             |
 | TikTok         | **`postType`**, **`channel`**, **`post`** | `postPhoto` (photo only)  |
 | TikTok Biz     | **`postType`**, **`post`**        | `postPhoto` (photo only)           |
-| YouTube        | **`postType`**                    | `post`                             |
+| YouTube        | **`postType`**, **`post`**        | —                                  |
 | LinkedIn       | **`audience`**                    | —                                  |
 | Pinterest      | **`post`**                        | —                                  |
 | Threads        | **`channel`**                     | —                                  |
@@ -293,7 +350,7 @@ Key enum values:
 1. getSocialMediaAccounts({ network: "instagram" })
 2. getSocialMediaAnalyticsRange({
      account_id: 123,
-     metrics: ["impressions", "reach", "follower_count"],
+     metrics: ["reach", "follower_count", "total_interactions", "saves"],
      date_from: "2026-02-01",
      date_to: "2026-02-28",
      tz: "Europe/Warsaw"
@@ -307,8 +364,11 @@ Key enum values:
 2. getSocialMediaAnalyticsPosts({
      account_id: 456,
      date_from: "2026-02-01",
-     date_to: "2026-02-28"
+     date_to: "2026-02-28",
+     page: 1,
+     per_page: 100
    })
+// Increment page until current_page >= pages_count
 ```
 
 ### Analytics: Account Overview (KPIs + Audience)
@@ -336,7 +396,7 @@ Key enum values:
 - **Date format** must be `YYYY-MM-DD HH:MM` (24-hour, no seconds, no timezone — uses account timezone)
 - **Media URLs** must be publicly accessible — pre-signed or CDN URLs work, localhost does not
 - **`date` is required** when `action` is `schedule` — omit it for `add_to_queue` and `draft`
-- **Platform character limits** — LinkedIn: 3000, Google: 1500, Bluesky: 300, Threads/Pinterest: 500, others: 2200
+- **Platform character limits** — always check before composing; see `references/PLATFORM_GUIDE.md` for limits per platform
 - **Instagram always requires `channel`** — include `channel: { value: "direct" }` for every Instagram post
 - **TikTok `postType` values** are `video` and `photo` (not `image`)
 - **TikTok channel values** are `direct` and `reminder` (not `business`)
@@ -344,3 +404,4 @@ Key enum values:
 - **Google `topicType`** only has `STANDARD`, `EVENT`, `OFFER` (no `PRODUCT`)
 - **Instagram story** — message must be empty (`""`), max 1 photo
 - **Reels and Shorts require video** — Instagram reel, Facebook reel, YouTube short all require a video file in `media`; images are not allowed (`photos.max: 0`)
+- **YouTube always requires `post.title`** — always include `additional.youtube.post` with a `title` field for every YouTube video or short

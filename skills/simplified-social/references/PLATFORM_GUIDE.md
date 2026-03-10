@@ -2,6 +2,25 @@
 
 Detailed per-platform parameter reference for `createSocialMediaPost`. All settings go inside the `additional` object, grouped by platform name:
 
+## Character Limits
+
+Always respect these limits when composing post messages:
+
+| Platform        | Message limit |
+|-----------------|--------------|
+| LinkedIn        | 3000 chars   |
+| Facebook        | 2200 chars   |
+| Instagram       | 2200 chars   |
+| TikTok          | 2200 chars   |
+| YouTube         | 2200 chars   |
+| Pinterest       | 500 chars    |
+| Threads         | 500 chars    |
+| Google Business | 1500 chars   |
+| Bluesky         | 300 chars    |
+
+---
+
+
 ```json
 "additional": {
   "instagram": {

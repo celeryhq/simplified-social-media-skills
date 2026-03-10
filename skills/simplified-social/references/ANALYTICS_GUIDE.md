@@ -4,6 +4,66 @@ Detailed reference for the four analytics tools: `getSocialMediaAnalyticsRange`,
 
 ---
 
+## General Rules
+
+- **`date_to` must not be in the future** — analytics data does not exist for future dates. When a user asks for "this month" and today is March 10, set `date_to` to today (`2026-03-10`), not the end of the month.
+- **LinkedIn account type** — check the `type` field from `getSocialMediaAccounts`: `"LinkedIn company"` = use Company metrics set, `"LinkedIn profile"` = use Personal metrics set.
+
+---
+
+## Relative Date Ranges
+
+Translate common user expressions to concrete dates using today's date:
+
+| User says | `date_from` | `date_to` |
+|---|---|---|
+| last 7 days | today − 7 days | today |
+| last 30 days | today − 30 days | today |
+| last 90 days | today − 90 days | today |
+| this week | Monday of current week | today |
+| last week | Monday of last week | Sunday of last week |
+| this month | 1st of current month | today |
+| last month | 1st of last month | last day of last month |
+| this year | January 1 of current year | today |
+| last year | January 1 of last year | December 31 of last year |
+
+Always cap `date_to` at today — never use a future date.
+
+---
+
+## Timezone
+
+Analytics day boundaries depend on timezone. UTC is the default but can produce misleading data for users in other timezones (e.g. a post published at 23:00 Warsaw time appears on the next day in UTC).
+
+**Rules:**
+- If the user mentions a timezone or location (e.g. "Warsaw", "New York", "CET"), pass it as `tz` using IANA format (e.g. `Europe/Warsaw`, `America/New_York`)
+- If the user's timezone is known from context, always pass `tz` explicitly
+- If timezone is unknown and the data is time-sensitive (daily breakdown), ask the user before proceeding
+- For simple totals or aggregated KPIs, UTC is acceptable without asking
+
+---
+
+## Default Metrics per Network
+
+Use these when the user does not specify metrics for `getSocialMediaAnalyticsRange`:
+
+| Network | Default metrics |
+|---|---|
+| Facebook | `total_fans`, `total_follows`, `new_fan`, `page_reach`, `post_reach_total`, `post_reach_viral`, `post_impression_total`, `page_post_engagements`, `reactions`, `link_clicks`, `engaged_users` |
+| Instagram | `follower_count`, `reach`, `accounts_engaged`, `total_interactions`, `saves`, `profile_views`, `profile_links_taps`, `website_clicks` |
+| LinkedIn (Company) | `allFollowers`, `unique_impressions`, `engagement`, `clicks`, `shares`, `comments` |
+| LinkedIn (Personal) | `memberFollowers`, `impressions`, `reactions`, `comments`, `shares` |
+| TikTok Personal | `follower_count`, `likes_count`, `posts_count` |
+| TikTok Business | `followers_count`, `video_views`, `profile_views`, `comments`, `shares` |
+| YouTube | `views`, `estimatedMinutesWatched`, `averageViewDuration`, `likes`, `dislikes`, `comments` |
+| Pinterest | `impression`, `save`, `save_rate`, `outbound_click`, `outbound_click_rate`, `pin_click_rate`, `video_avg_watch_time`, `engagement_rate` |
+| Threads | `followers_count`, `views`, `reposts`, `quotes`, `replies`, `clicks` |
+| Google | `queries_direct`, `queries_indirect`, `views_search`, `views_maps`, `actions_website`, `actions_phone`, `actions_driving_directions` |
+
+> For TikTok Business audience demographics (gender, country breakdown) use `getSocialMediaAnalyticsAudience` instead of Range.
+
+---
+
 ## Available Metrics by Network
 
 Use these values in the `metrics` array for `getSocialMediaAnalyticsRange`. Unknown metrics are silently ignored by the API.

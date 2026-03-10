@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.2.0] - 2026-03-10
+
+### Added
+- Decision tree for choosing the right analytics tool (Range vs Posts vs Aggregated vs Audience)
+- Default metrics per network for `getSocialMediaAnalyticsRange` — recommended metric sets for all 10 platforms
+- Relative date range guide — how to translate "last 30 days", "this month" etc. to concrete dates
+- Timezone guidance for analytics — when to pass `tz`, when to ask the user
+- Pagination guidance for `getSocialMediaAnalyticsPosts` — use `per_page: 100`, loop until `current_page >= pages_count`
+- Empty accounts message — agent now shows onboarding prompt when no accounts are connected
+- `page` and `per_page` parameters for `getSocialMediaAnalyticsPosts`
+- Character limits table per platform in `PLATFORM_GUIDE.md`
+- New triggers: `google my business`, `gmb`, `content calendar`, `social media manager`, `post scheduling`, `social media automation`, `social media campaign`
+
+### Fixed
+- `getSocialMediaAccounts` response documented correctly: `type` field (not `network`), wrapped in `{ accounts: [] }`, no connection status
+- Deprecated `impressions` metric removed from Instagram examples — replaced with `saves`
+- YouTube `post` marked as required additional (includes mandatory `title` field)
+- LinkedIn Company vs Personal distinction based on `type` field value
+- Example `per_page: 25` corrected to `per_page: 100`
+
+### Changed
+- Default metrics and character limits moved to reference files (`ANALYTICS_GUIDE.md`, `PLATFORM_GUIDE.md`) — SKILL.md now contains only behavioral instructions
+
 ## [1.1.0] - 2026-03-09
 
 ### Added
