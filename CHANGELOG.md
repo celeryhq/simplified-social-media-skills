@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.2] - 2026-03-11
+
+### Fixed
+- Add MCP server configuration section to SKILL.md body so OpenClaw/mcporter knows to connect to `https://mcp.simplified.com/social-media/mcp`
+- Remove non-standard `requires.mcp` from frontmatter (not supported by OpenClaw)
+
 ## [1.2.1] - 2026-03-10
 
 ### Fixed
