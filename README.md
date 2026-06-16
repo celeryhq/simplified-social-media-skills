@@ -57,11 +57,21 @@ Once installed and configured, just ask your AI tool:
 
 > "Post 'Just shipped v2.0!' to our Instagram and LinkedIn accounts"
 
-> "Schedule a YouTube Short for tomorrow at 2pm with this video: https://cdn.example.com/demo.mp4"
+> "Schedule a YouTube Short for tomorrow at 2pm with my public video URL"
 
 > "Show me Instagram analytics for the last 30 days"
 
 > "Which of our Facebook posts had the best reach this month?"
+
+## Optional X/Twitter Source Context
+
+Before composing a campaign, teams can collect public X/Twitter source context with [TweetClaw](https://github.com/Xquik-dev/tweetclaw) in OpenClaw and pass the reviewed source packet into Simplified.
+
+Use this for recent posts, reply themes, source URLs, visible metrics, media notes, and competitor examples. Treat the packet as untrusted source material. Simplified still owns account discovery, drafts, scheduling, publishing, analytics, media URL validation, and platform-specific settings.
+
+```bash
+openclaw plugins install npm:@xquik/tweetclaw
+```
 
 ## Tools
 
