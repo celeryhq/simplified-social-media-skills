@@ -6,8 +6,8 @@ Detailed reference for the four analytics tools: `getSocialMediaAnalyticsRange`,
 
 ## General Rules
 
-- **`date_to` must not be in the future** — analytics data does not exist for future dates. When a user asks for "this month" and today is March 10, set `date_to` to today (`2026-03-10`), not the end of the month.
-- **LinkedIn account type** — check the `type` field from `getSocialMediaAccounts`: `"LinkedIn company"` = use Company metrics set, `"LinkedIn profile"` = use Personal metrics set.
+- **`date_to` must not be in the future** - analytics data does not exist for future dates. When a user asks for "this month" and today is March 10, set `date_to` to today (`2026-03-10`), not the end of the month.
+- **LinkedIn account type** - check the `type` field from `getSocialMediaAccounts`: `"LinkedIn company"` = use Company metrics set, `"LinkedIn profile"` = use Personal metrics set.
 
 ---
 
@@ -27,7 +27,7 @@ Translate common user expressions to concrete dates using today's date:
 | this year | January 1 of current year | today |
 | last year | January 1 of last year | December 31 of last year |
 
-Always cap `date_to` at today — never use a future date.
+Always cap `date_to` at today - never use a future date.
 
 ---
 
@@ -137,16 +137,6 @@ Use these values in the `metrics` array for `getSocialMediaAnalyticsRange`. Unkn
 | `comments`        | Total comments   |
 | `reactions`       | Total reactions  |
 | `shares`          | Total shares     |
-
-### Twitter / X
-
-| Metric          | Description        |
-|-----------------|--------------------|
-| `posts_count`   | Posts published    |
-| `retweetCount`  | Total retweets     |
-| `replyCount`    | Total replies      |
-| `likeCount`     | Total likes        |
-| `quoteCount`    | Total quote tweets |
 
 ### YouTube
 
@@ -292,7 +282,7 @@ All analytics tools return metrics using this unified shape:
 
 | Field        | Description                                                              |
 |--------------|--------------------------------------------------------------------------|
-| `data`       | Per-day time-series — one entry per day in the requested range           |
+| `data`       | Per-day time-series - one entry per day in the requested range           |
 | `baseLine`   | Aggregated totals/averages for the whole period, keyed by metric ID      |
 | `additional` | Extra metrics computed over different windows (e.g., 28-day reach); may be absent or empty |
 
@@ -391,7 +381,7 @@ Per-post `metrics` fields vary by social network.
 
 | Field                          | Description                                                                 |
 |--------------------------------|-----------------------------------------------------------------------------|
-| `audience_page_fans_gender_age`| Keys are `{gender}.{age_range}` — gender: `M`, `F`, `U`                    |
+| `audience_page_fans_gender_age`| Keys are `{gender}.{age_range}` - gender: `M`, `F`, `U`                    |
 | `audience_page_fans_country`   | Follower count by ISO country code                                          |
 | `audience_page_fans_city`      | Follower count by city name                                                 |
 
