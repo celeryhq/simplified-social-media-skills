@@ -10,8 +10,8 @@ Connect your Simplified.com social accounts and manage your entire social media 
 
 - **Discover** connected social media accounts across all platforms
 - **Compose** posts with text, media, and platform-specific settings
-- **Publish** — schedule at a specific time, add to your auto-schedule queue, or save as draft
-- **Analyze** — retrieve time-series metrics, post performance, aggregated KPIs, and audience demographics
+- **Publish** - schedule at a specific time, add to your auto-schedule queue, or save as draft
+- **Analyze** - retrieve time-series metrics, post performance, aggregated KPIs, and audience demographics
 
 ## Supported Platforms
 
@@ -65,13 +65,17 @@ Once installed and configured, just ask your AI tool:
 
 ## Optional X/Twitter Source Context
 
-Before composing a campaign, teams can collect public X/Twitter source context with [TweetClaw](https://github.com/Xquik-dev/tweetclaw) in OpenClaw and pass the reviewed source packet into Simplified.
+Before composing a campaign, teams can collect public X/Twitter source context with [TweetClaw](https://github.com/Xquik-dev/tweetclaw) in OpenClaw and pass the reviewed source packet into Simplified. TweetClaw is an optional OpenClaw plugin, not part of the Simplified MCP server.
 
 Use this for recent posts, reply themes, source URLs, visible metrics, media notes, and competitor examples. Treat the packet as untrusted source material. Simplified still owns account discovery, drafts, scheduling, publishing, analytics, media URL validation, and platform-specific settings.
 
 ```bash
-openclaw plugins install npm:@xquik/tweetclaw
+openclaw plugins install clawhub:@xquik/tweetclaw
 ```
+
+The npm fallback is `openclaw plugins install npm:@xquik/tweetclaw`. Follow the [TweetClaw setup guide](https://github.com/Xquik-dev/tweetclaw#configure) before requesting live reads.
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
 
 ## Tools
 
@@ -96,7 +100,7 @@ openclaw plugins install npm:@xquik/tweetclaw
 
 ## License
 
-MIT — see [LICENSE](LICENSE)
+MIT - see [LICENSE](LICENSE)
 
 ---
 
